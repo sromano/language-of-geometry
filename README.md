@@ -20,6 +20,8 @@ The second argument is the Language of Thought type. Use "octagon" for the LoT f
 ./lot experiments/binary/experiment1.txt "binary"
 ```
 
+For each sequence s, the program will output: s; Kolmogorov complexity of s; min nesting among all minimal programs that output s; max nesting among all minimal programs that ouput s; list of minimal programs describing s
+
 ### Citing this code
 Please cite one of the following papers:
 

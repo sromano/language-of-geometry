@@ -1,4 +1,4 @@
-module Lot(min_progs_absolute, complexity) where
+module Lot(min_progs_absolute_L, complexity) where
 import Data.Char(digitToInt,intToDigit)
 import Data.Maybe(fromJust)
 import Data.List(find,sortBy)
@@ -197,6 +197,7 @@ min_prog_D y n dict =[[p :+: (((length y) `div` d), i)] | d <- [1..(length y)-1]
 
 
 
+min_progs_absolute_L = min_progs_absolute''''
 
 ---- Gives the shortests programs of a string over all possible starting points, that starting point, and the length
 ----min_progs_absolute x = x ++ (show len) ++ [(show q) ++ " ; " ++ (show n) | (q,n) <- mins]
@@ -233,12 +234,11 @@ min_progs_absolute''' (x:xs) = (x:xs) ++ " ; " ++ (show len) ++ " ; " ++ concat 
                                   ps  = min_prog (x:xs) (digitToInt x)
 
 
--- Given a string x:xs, outputs: string; Kolmogorov complexity of x:xs ; min nesting among all minimal programs ; ; max nesting among all minimal programs ; all minimal programs use intruction P?
-min_progs_absolute'''' (x:xs) = (x:xs) ++ " ; " ++ (show len) ++ " ; " ++ (show (minimum ns)) ++ " ; " ++ (show (maximum ns)) ++ " ; " ++ (show p)
+-- Given a string x:xs, outputs: string; Kolmogorov complexity of x:xs ; min nesting among all minimal programs ; ; max nesting among all minimal programs ; list of minimal programs describing x:xs
+min_progs_absolute'''' (x:xs) = (x:xs) ++ " ; " ++ (show len) ++ " ; " ++ (show (minimum ns)) ++ " ; " ++ (show (maximum ns)) ++ " \n " ++ concat [(show q) ++ " \n " | q <- ps]
                               where len = size (ps !! 0)
                                     ps  = min_prog (x:xs) (digitToInt x)
                                     ns  = [(nesting q) | q <- ps]
-                                    p   = all (==True) (map program_uses_P ps)
 
 
 

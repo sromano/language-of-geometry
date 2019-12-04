@@ -128,11 +128,10 @@ min_prog_D y n dict =[[p :+: (((length y) `div` d), i)] | d <- [1..(length y)-1]
 
 
 
----- Gives the shortests programs of a string over all possible starting points, that starting point, and the length
-----min_progs_absolute x = x ++ (show len) ++ [(show q) ++ " ; " ++ (show n) | (q,n) <- mins]
+min_progs_absolute_C = min_progs_absolute''''
 
 -- Given a string x:xs, outputs: string; Kolmogorov complexity of x:xs ; list of minimal programs describing x:xs
-min_progs_absolute_C (x:xs) = (x:xs) ++ " ; complexity = " ++ (show len) ++ " \n " ++ concat [(show q) ++ " \n " | q <- ps]
+min_progs_absolute (x:xs) = (x:xs) ++ " ; complexity = " ++ (show len) ++ " \n " ++ concat [(show q) ++ " \n " | q <- ps]
                             where len = size (ps !! 0)
                                   ps  = min_prog (x:xs) (digitToInt x)
                                   ns  = [(nesting q) | q <- ps]
@@ -162,8 +161,8 @@ min_progs_absolute''' (x:xs) = (x:xs) ++ " ; " ++ (show len) ++ " ; " ++ concat 
                                   ps  = min_prog (x:xs) (digitToInt x)
 
 
--- Given a string x:xs, outputs: string; Kolmogorov complexity of x:xs ; min nesting among all minimal programs ; ; max nesting among all minimal programs ;
-min_progs_absolute'''' (x:xs) = (x:xs) ++ " ; " ++ (show len) ++ " ; " ++ (show (minimum ns)) ++ " ; " ++ (show (maximum ns))
+-- Given a string x:xs, outputs: string; Kolmogorov complexity of x:xs ; min nesting among all minimal programs ; ; max nesting among all minimal programs ; list of minimal programs describing x:xs
+min_progs_absolute'''' (x:xs) = (x:xs) ++ " ; " ++ (show len) ++ " ; " ++ (show (minimum ns)) ++ " ; " ++ (show (maximum ns)) ++ " \n " ++ concat [(show q) ++ " \n " | q <- ps]
                               where len = size (ps !! 0)
                                     ps  = min_prog (x:xs) (digitToInt x)
                                     ns  = [(nesting q) | q <- ps]
