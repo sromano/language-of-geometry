@@ -111,11 +111,11 @@ min_prog'' y n dict | length y == 1 = shortest_prog [q | q <- atomic_progs, (exe
 
 min_prog_concat y n dict = [p1++p2 | (z1,z2) <- (splitInChunks y), p1 <- fromJust (dict (z1, n)), p2 <- fromJust (dict (z2, digitToInt (last z1)))]
 
-min_prog_repeat y n dict = [[p:^: ((length y) `div` d)] | d <- [1..(length y)-1], isJust (dict ((take d y),n)), elem (take d y) (chunks y), p <- fromJust (dict ((take d y),n)), (length y) `mod` d == 0, y == (exe [p:^: ((length y) `div` d)] n)]
+min_prog_repeat y n dict = [[p:^: ((length y) `div` d)] | d <- [1..(length y)-1], isJust (dict ((take d y),n)), elem (take d y) (map fst (splitInChunks y)), p <- fromJust (dict ((take d y),n)), (length y) `mod` d == 0, y == (exe [p:^: ((length y) `div` d)] n)]
 
-min_prog_C y n dict =[[p :*: (((length y) `div` d), i)] | d <- [1..(length y)-1], [i] <- atomic_progs, isJust (dict ((take d y),n)), elem (take d y) (chunks y), p <- (fromJust (dict ((take d y),n))), (length y) `mod` d == 0, y == (exe [p :*: (((length y) `div` d), i)] n) ]
+min_prog_C y n dict =[[p :*: (((length y) `div` d), i)] | d <- [1..(length y)-1], [i] <- atomic_progs, isJust (dict ((take d y),n)), elem (take d y) (map fst (splitInChunks y)), p <- (fromJust (dict ((take d y),n))), (length y) `mod` d == 0, y == (exe [p :*: (((length y) `div` d), i)] n) ]
 
-min_prog_D y n dict =[[p :+: (((length y) `div` d), i)] | d <- [1..(length y)-1], [i] <- atomic_progs, isJust (dict ((take d y),n)), elem (take d y) (chunks y), p <- (fromJust (dict ((take d y),n))), (length y) `mod` d == 0, y == (exe [p :+: (((length y) `div` d), i)] n) ]
+min_prog_D y n dict =[[p :+: (((length y) `div` d), i)] | d <- [1..(length y)-1], [i] <- atomic_progs, isJust (dict ((take d y),n)), elem (take d y) (map fst (splitInChunks y)), p <- (fromJust (dict ((take d y),n))), (length y) `mod` d == 0, y == (exe [p :+: (((length y) `div` d), i)] n) ]
 
 --
 ---- It gives either empty or a singleton list consisting of the minimum prefix-like program describing y from n
