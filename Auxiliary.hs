@@ -13,9 +13,10 @@ substringChunks :: Eq a => [a] -> [[a]]
 substringChunks y = sortBy (compare `on` length) $ removeDuplicates $ y : (foldr (\(a,b) xs-> (a:b:xs++substringChunks a++substringChunks b)) [] (splitInChunks y))
 
 splitInChunks :: Eq a => [a] -> [([a], [a])]
-splitInChunks y | (length $ chunks y ) == 1 = split y
+splitInChunks y | (length $ chunks y ) == 1 = []
                 | otherwise = [ splitChunkAt y n | n <- [1..(length $ chunks y)-1]]
                               where splitChunkAt y n = (concat $ take n $ chunks y, concat $ drop n $ chunks y)
+
 
 chunks :: (Eq a) => [a] -> [[a]]
 chunks [] = []
